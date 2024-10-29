@@ -11,7 +11,6 @@ use function array_replace_recursive;
 use function sprintf;
 
 /**
- * @internal
  *
  * @template T
  */

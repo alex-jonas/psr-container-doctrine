@@ -2,27 +2,24 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 5.4.0 - TBD
+## 5.4.0 - 2024-11-11
 
-### Added
 
-- Nothing.
+-----
 
-### Changed
+### Release Notes for [5.4.0](https://github.com/Roave/psr-container-doctrine/milestone/48)
 
-- Nothing.
+Feature release (minor)
 
-### Deprecated
+### 5.4.0
 
-- Nothing.
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
 
-### Removed
+#### bug
 
-- Nothing.
-
-### Fixed
-
-- Nothing.
+ - [140: No longer mark AbstractFactory as internal](https://github.com/Roave/psr-container-doctrine/pull/140) thanks to @cspray
 
 ## 5.3.0 - 2024-09-25
 

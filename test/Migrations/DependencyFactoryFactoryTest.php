@@ -41,4 +41,46 @@ final class DependencyFactoryFactoryTest extends TestCase
         self::assertSame($entityManager, $dependencyFactory->getEntityManager());
         self::assertInstanceOf(Configuration::class, $dependencyFactory->getConfiguration());
     }
+
+    public function testInstantiatesConfigurationLoaderFactoryWhenNotInContainer(): void
+    {
+        $container = $this->createMock(ContainerInterface::class);
+        $config    = [
+            'doctrine' => [
+                'configuration' => [
+                    'orm_default' => [
+                        'metadata_cache' => 'metadata',
+                        'result_cache' => 'result',
+                        'query_cache' => 'query',
+                        'hydration_cache' => 'hydration',
+                        'second_level_cache' => ['enabled' => true],
+                    ],
+                ],
+            ],
+        ];
+
+        $container->method('has')
+            ->willReturnMap(
+                [
+                    ['config', true],
+                    [ConfigurationLoader::class, false],
+                    ['doctrine.entity_manager.orm_default', true],
+                ],
+            );
+
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $container->method('get')
+            ->willReturnMap(
+                [
+                    ['config', $config],
+                    ['doctrine.entity_manager.orm_default', $entityManager],
+                ],
+            );
+
+        $factory           = new DependencyFactoryFactory();
+        $dependencyFactory = $factory($container);
+        self::assertInstanceOf(DependencyFactory::class, $dependencyFactory);
+        self::assertSame($entityManager, $dependencyFactory->getEntityManager());
+        self::assertInstanceOf(Configuration::class, $dependencyFactory->getConfiguration());
+    }
 }

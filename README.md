@@ -197,3 +197,60 @@ ConsoleRunner::run(
 );
 
 ```
+
+### Multiple connections and migrations
+
+There may be a requirement for a migration table in each connection. Whether its a different database entirely,
+or other another schema (PostgreSQL for example). 
+
+For this to work you must first ensure the service `\Doctrine\Migrations\Configuration\Migration\ConfigurationLoader`
+is **not** set in the container.
+This allows for the factory `\Roave\PsrContainerDoctrine\Migrations\DependencyFactoryFactory` to create its
+own `ConfigurationLoader` by the key provided.
+
+You first need to add additional config to the migrations in the doctrine config
+```php
+return [
+    'doctrine' => [
+        ...
+
+        'migrations' => [
+            'orm_default' => [
+                'table_storage' => [
+                    'table_name' => 'migrations_executed',
+                    'version_column_name' => 'version',
+                    'version_column_length' => 255,
+                    'executed_at_column_name' => 'executed_at',
+                    'execution_time_column_name' => 'execution_time',
+                ],
+                'migrations_paths' => ['My\Migrations' => 'scripts/orm/migrations'],
+                'all_or_nothing' => true,
+                'check_database_platform' => true,
+            ],
+            'orm_default2' => [
+                'table_storage' => [
+                    'table_name' => 'migrations_executed',
+                    'version_column_name' => 'version',
+                    'version_column_length' => 255,
+                    'executed_at_column_name' => 'executed_at',
+                    'execution_time_column_name' => 'execution_time',
+                ],
+                'migrations_paths' => ['My\Migrations2' => 'scripts/orm/migrations2'],
+                'all_or_nothing' => true,
+                'check_database_platform' => true,
+            ],
+        ],
+
+        ...
+    ],
+];
+```
+
+Now the example `bin/doctrine` script above can be extended to use the `$em` variable along with the `CommandFactory`.
+```php
+$commandFactory = new \Roave\PsrContainerDoctrine\Migration\CommandFactory($em);
+
+$commands = [
+    $commandFactory($container, Command\GenerateCommand::class),
+];
+```

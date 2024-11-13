@@ -2,27 +2,24 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 5.5.0 - TBD
+## 5.5.0 - 2024-11-13
 
-### Added
 
-- Nothing.
+-----
 
-### Changed
+### Release Notes for [5.5.0](https://github.com/Roave/psr-container-doctrine/milestone/50)
 
-- Nothing.
+Feature release (minor)
 
-### Deprecated
+### 5.5.0
 
-- Nothing.
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
 
-### Removed
+#### enhancement
 
-- Nothing.
-
-### Fixed
-
-- Nothing.
+ - [142: Instantiate ConfigurationLoaderFactory when not in container](https://github.com/Roave/psr-container-doctrine/pull/142) thanks to @scottasmith
 
 ## 5.4.0 - 2024-11-11
 

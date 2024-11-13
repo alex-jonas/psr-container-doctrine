@@ -25,8 +25,14 @@ final class DependencyFactoryFactory extends AbstractFactory
             ),
         );
 
+        if ($container->has(ConfigurationLoader::class)) {
+            $configurationLoader = $container->get(ConfigurationLoader::class);
+        } else {
+            $configurationLoader = (new ConfigurationLoaderFactory($configKey))($container);
+        }
+
         return DependencyFactory::fromEntityManager(
-            $container->get(ConfigurationLoader::class),
+            $configurationLoader,
             $entityManagerLoader,
         );
     }

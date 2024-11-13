@@ -52,16 +52,33 @@ final class CommandFactoryTest extends TestCase
     public function testReturnsCommandWhenContainerHasNoDependencyFactory(string $commandClass): void
     {
         $container = $this->createMock(ContainerInterface::class);
+        $config    = [
+            'doctrine' => [
+                'configuration' => [
+                    'orm_default' => [
+                        'metadata_cache' => 'metadata',
+                        'result_cache' => 'result',
+                        'query_cache' => 'query',
+                        'hydration_cache' => 'hydration',
+                        'second_level_cache' => ['enabled' => true],
+                    ],
+                ],
+            ],
+        ];
+
         $container->method('has')
             ->willReturnMap(
                 [
+                    ['config', true],
                     [DependencyFactory::class, false],
+                    [ConfigurationLoader::class, true],
                     ['doctrine.entity_manager.orm_default', true],
                 ],
             );
         $container->method('get')
             ->willReturnMap(
                 [
+                    ['config', $config],
                     [DependencyFactory::class, $this->createMock(DependencyFactory::class)],
                     [ConfigurationLoader::class, $this->createMock(ConfigurationLoader::class)],
                     ['doctrine.entity_manager.orm_default', $this->createMock(EntityManagerInterface::class)],

@@ -1,5 +1,5 @@
 {
-    "name": "roave/psr-container-doctrine",
+    "name": "alex-jonas/psr-container-doctrine",
     "description": "Doctrine Factories for PSR-11 Containers",
     "license": "BSD-2-Clause",
     "type": "library",

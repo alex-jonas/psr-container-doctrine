@@ -3,6 +3,8 @@
     "description": "Doctrine Factories for PSR-11 Containers",
     "license": "BSD-2-Clause",
     "type": "library",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Ben Scholzen",
